@@ -4,11 +4,10 @@ Pipeline de dados construído no **Databricks Free Edition** para analisar a est
 do mercado de banda larga fixa nos 497 municípios do Rio Grande do Sul, cruzando
 dados regulatórios da Anatel com dados socioeconômicos do IBGE.
 
-**RÔMULO A. T. KOHLER**
+**ALUNO: RÔMULO A. T. KOHLER**
 
 **Curso:** Pós-Graduação em Data Science & Analytics — PUC-Rio
 **Disciplina:** Engenharia de Dados
-**Autor:** Rômulo
 **Plataforma:** Databricks Free Edition (Unity Catalog, Delta Lake, PySpark)
 
 ---
