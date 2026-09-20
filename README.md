@@ -1,6 +1,6 @@
 # MVP de Engenharia de Dados — Mercado de Banda Larga Fixa nos Municípios do RS
 
-Pipeline de dados construído no **Databricks Free Edition** para analisar a estrutura
+Pipeline de dados construído no **Databricks** para analisar a estrutura
 do mercado de banda larga fixa nos 497 municípios do Rio Grande do Sul, cruzando
 dados regulatórios da Anatel com dados socioeconômicos do IBGE.
 
@@ -8,29 +8,28 @@ dados regulatórios da Anatel com dados socioeconômicos do IBGE.
 
 **Curso:** Pós-Graduação em Data Science & Analytics — PUC-Rio
 **Disciplina:** Engenharia de Dados
-**Plataforma:** Databricks Free Edition (Unity Catalog, Delta Lake, PySpark)
 
 ---
 
 ## Sumário
 
-- [Contexto de Negócio e Perguntas (Etapas 2 e 4.1)](#contexto-de-negócio-e-perguntas-etapas-2-e-41)
-- [Carga dos Dados (Etapa 4.2)](#carga-dos-dados-etapa-42)
-- [Modelagem e Catálogo de Dados (Etapa 4.3)](#modelagem-e-catálogo-de-dados-etapa-43)
-- [Pipeline de Dados (Etapa 4.4)](#pipeline-de-dados-etapa-44)
-- [Qualidade de Dados (Etapa 4.5)](#qualidade-de-dados-etapa-45)
-- [Análise de Dados (Etapa 4.5)](#análise-de-dados-etapa-45)
-- [Autoavaliação](#autoavaliação)
+- Contexto de Negócio e Perguntas 
+- Carga dos Dados
+- Modelagem e Catálogo de Dados 
+- Pipeline de Dados
+- Qualidade de Dados
+- Análise de Dados
+- Autoavaliação
 
 ---
 
-## Contexto de Negócio e Perguntas (Etapas 2 e 4.1)
+## Contexto de Negócio e Perguntas 
 
 ### O problema
 
 O mercado brasileiro de banda larga fixa passou por uma transformação profunda na
 última década: a fibra óptica substituiu tecnologias legadas, e centenas de
-provedores regionais surgiram disputando espaço com as operadoras incumbentes. No Rio
+provedores regionais surgiram disputando espaço com as grande operadoras. No Rio
 Grande do Sul esse movimento é particularmente intenso — o estado tem um dos
 ecossistemas de ISPs regionais mais densos do país.
 
@@ -46,14 +45,14 @@ de velocidade. O IBGE publica população, domicílios e PIB municipal. O que n�
 
 ### Perguntas de negócio
 
-Definidas antes da coleta e mantidas intactas conforme orientação do enunciado:
+Definidas antes da coleta.
 
 1. **Quais municípios concentram o maior volume de domicílios ainda não atendidos?**
 2. **A penetração varia com o porte do município? Existe faixa populacional
    sistematicamente mal servida?**
 3. **Como se distribui o número de provedores por município? Quantos são monopólio de
    fato?**
-4. **Qual a participação da fibra por município e por região? Quais municípios ainda
+4. **Qual a participação de fibra óptica por município e por região? Quais municípios ainda
    dependem de rádio, satélite ou cobre?**
 5. **Quais municípios têm a base de velocidade mais defasada — potencial de upgrade
    de plano?**
@@ -133,7 +132,7 @@ os coleta e transforma.
 
 ---
 
-## Carga dos Dados (Etapa 4.2)
+## Carga dos Dados
 
 ### Restrição da plataforma
 
@@ -178,13 +177,9 @@ Toda tabela da camada Bronze recebe três colunas de rastreabilidade:
 |---|---|
 | [`01_bronze_ingestao.ipynb`](notebooks/01_bronze_ingestao.ipynb) | Download, descompactação e ingestão das sete tabelas Bronze |
 
-> **Screenshot 1** — Volume do Unity Catalog com os arquivos CSV da Anatel
-> **Screenshot 2** — Catalog Explorer mostrando as tabelas da camada Bronze
-> **Screenshot 3** — Saída da validação de integridade contra o total oficial da Anatel
-
 ---
 
-## Modelagem e Catálogo de Dados (Etapa 4.3)
+## Modelagem e Catálogo de Dados 
 
 ### Arquitetura Medalhão
 
@@ -279,22 +274,12 @@ separação das dimensões:
 
 O catálogo é implementado diretamente no **Unity Catalog** via `COMMENT ON TABLE` e
 `COMMENT ON COLUMN`, aplicados programaticamente nas camadas Silver e Gold. Cada
-coluna documenta os quatro itens exigidos pelo enunciado:
+coluna documenta:
 
 - **Descrição** — o que o campo representa
 - **Tipo de dado** — implícito no schema Delta, visível no Catalog Explorer
 - **Domínio de valores** — faixas para numéricos, categorias para categóricos
 - **Linhagem** — fonte de origem e transformações aplicadas
-
-Exemplo de comentário aplicado:
-
-> `mercado_municipio.hhi` — "Indice Herfindahl-Hirschman. Unidade: indice
-> adimensional. Dominio: 0 a 10000. Formula: soma dos quadrados dos shares percentuais
-> por CNPJ."
-
-> `dim_municipio.domicilios_total_qtd` — "Total de domicilios recenseados, todas as
-> especies. Unidade: domicilios. Denominador de mercado enderecavel: qualquer imovel
-> e potencial contratante. Linhagem: SIDRA 4711 v/617 c3/59993, Censo 2022."
 
 ### Convenção de nomes
 
@@ -309,13 +294,9 @@ A unidade de medida faz parte do nome de cada coluna:
 | `_mil_brl` | mil reais (unidade original do IBGE) |
 | `_km2` | quilômetros quadrados |
 
-> **Screenshot 4** — Catalog Explorer com a estrutura de catálogos e schemas
-> **Screenshot 5** — Detalhe de `gold.telecom.mercado_municipio` com os comentários de coluna
-> **Screenshot 6** — Diagrama de linhagem gerado pelo Unity Catalog
-
 ---
 
-## Pipeline de Dados (Etapa 4.4)
+## Pipeline de Dados
 
 ### Organização
 
@@ -368,12 +349,9 @@ acesso se perdeu ou multiplicou nos cinco joins com as dimensões, e que nenhuma
 estrangeira ficou nula. Divergência aqui indicaria chave duplicada em alguma
 dimensão — foi exatamente essa validação que revelou o problema da `dim_tecnologia`.
 
-> **Screenshot 7** — Tabelas persistidas nas três camadas do Unity Catalog
-> **Screenshot 8** — Saída da validação de integridade referencial
-
 ---
 
-## Qualidade de Dados (Etapa 4.5)
+## Qualidade de Dados
 
 As verificações estão implementadas nos notebooks das camadas em que são executadas.
 A camada Silver traz as cinco dimensões exigidas, com registro consolidado na tabela
@@ -410,9 +388,8 @@ verificada.
 
 Validação contra fonte externa independente: a densidade calculada pelo pipeline é
 comparada com a densidade oficial publicada pela própria Anatel, município a
-município. É a única validação externa possível com os dados disponíveis.
+município. 
 
-*(a completar com a diferença média observada)*
 
 ### Outliers
 
@@ -564,13 +541,7 @@ que o problema seja detectado na origem em execuções futuras.
 
 ---
 
-> **Screenshot 9** — Tabela `silver.telecom.qualidade_dados` consolidada
-> **Screenshot 10** — Comparação de municípios acima de 100% nos dois denominadores
-> **Screenshot 11** — Composição PF/PJ dos 12 municípios remanescentes
-
----
-
-## Análise de Dados (Etapa 4.5)
+## Análise de Dados
 
 As respostas completas, com consultas, tabelas e visualizações, estão em
 [`04_analise.ipynb`](notebooks/04_analise.ipynb).
@@ -747,26 +718,3 @@ as quatro tarefas encadeadas permitiria atualização mensal automática, acompa
 publicação da Anatel.
 
 ---
-
-## Como executar
-
-1. Criar conta no [Databricks Free Edition](https://www.databricks.com/learn/free-edition)
-2. Completar a verificação de identidade via LinkedIn para liberar o acesso de saída
-   à internet
-3. Importar os quatro notebooks no workspace
-4. Executar na ordem: `01` → `02` → `03` → `04`
-
-Os parâmetros de recorte (UF, ano, mês) estão no bloco de parâmetros no topo de cada
-notebook.
-
----
-
-## Referências
-
-- [Anatel — Dados Abertos](https://www.anatel.gov.br/dadosabertos/)
-- [IBGE — API de Localidades](https://servicodados.ibge.gov.br/api/docs/localidades)
-- [IBGE — API SIDRA](https://apisidra.ibge.gov.br/)
-- [Databricks — Arquitetura Medalhão](https://www.databricks.com/glossary/medallion-architecture)
-- [Databricks — Unity Catalog](https://docs.databricks.com/data-governance/unity-catalog/index.html)
-- Kimball, R.; Ross, M. *The Data Warehouse Toolkit*, 3ª edição — esquema estrela,
-  dimensões lixo e chaves surrogate
