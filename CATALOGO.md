@@ -714,23 +714,3 @@ percentil, com peso igual.
 
 ---
 
-## Notas sobre o catálogo
-
-**Implementação.** Os comentários são aplicados por uma função `documentar_colunas()`
-que recebe um dicionário e executa `COMMENT ON COLUMN` em lote. O código está nos
-notebooks `02_silver_transformacao.ipynb` e `03_gold_modelagem.ipynb`.
-
-**Consulta programática.** O catálogo pode ser consultado diretamente no Unity
-Catalog:
-
-```sql
-SELECT table_catalog, table_name, column_name, data_type, comment
-FROM system.information_schema.columns
-WHERE table_catalog IN ('silver', 'gold')
-  AND table_schema = 'telecom'
-ORDER BY table_catalog, table_name, ordinal_position
-```
-
-**Linhagem visual.** O Unity Catalog gera automaticamente o diagrama de linhagem
-entre as tabelas das três camadas, acessível pela aba *Lineage* de cada tabela no
-Catalog Explorer.
