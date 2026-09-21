@@ -546,77 +546,109 @@ que o problema seja detectado na origem em execuções futuras.
 As respostas completas, com consultas, tabelas e visualizações, estão em
 [`04_analise.ipynb`](notebooks/04_analise.ipynb).
 
-### Panorama do mercado gaúcho
+### Perguntas propostas e respectivas respostas:
 
-*(a completar: total de acessos, penetração estadual, participação da fibra, número de
-prestadoras)*
+1. **Quais municípios concentram o maior volume de domicílios ainda não atendidos?**
 
----
+Em termos da quantidade de domicílios não atendidos as Top 10 cidades seriam:
 
-### 1. Municípios com maior volume de domicílios não atendidos
+Porto Alegre - 78.861
+Gravataí - 53.957
+Viamão - 32.433
+Pelotas - 31.074
+Caxias do Sul - 28.402
+Santa Maria - 28.348
+Cachoeirinha - 26.601
+Bagé - 22.797
+Canoas - 21.619
+Rio Grande - 20.956
+Porém, todas essas são cidades com porte populacional acima de 100 mil habitantes, o que nós faz analisar em conjunto a taxa de penetração, onde
 
-*(a completar)*
+Porto Alegre - 88,53%
+Gravataí - 54,80%
+Viamão - 69,76%
+Pelotas - 81,29%
+Caxias do Sul - 87,12%
+Santa Maria - 78,62%
+Cachoeirinha - 56,11%
+Bagé - 57,56%
+Canoas - 86,10%
+Rio Grande - 79,64%
+Analisando os dois recortes, podemos ver que apesar de algumas cidades terem um maior número de domicílios pendentes de atendimento, isso não se reflete em mercado potencial de atenuação devido as altas taxas de ocupação.
 
-> **Screenshot 12** — Ranking de municípios por mercado não atendido
-> **Screenshot 13** — Gráfico de mercado não atendido por mesorregião
+Mas podemos destacar as cidades de Gravataí, Cachoerinha e Bagé que possuem uma taxa de penetração abaixo de 60% o qual ainda há espaço para atendimento.
 
----
+O mercado não atendido do RS se distribui de forma desigual entre volume e percentual. Municípios de grande porte concentram o maior número absoluto de domicílios sem acesso, mesmo tendo penetração acima da média — o volume vem da escala, não da carência.
 
-### 2. Penetração por porte de município
+Já os municípios com menor penetração percentual tendem a ser de porte menor e localizados fora dos eixos metropolitanos, onde a oferta é mais rarefeita.
 
-*(a completar)*
+Para estratégia comercial, as duas leituras servem a propósitos diferentes: volume absoluto indica onde há mais assinantes possíveis; penetração baixa indica onde a concorrência ainda não consolidou posição.
 
-> **Screenshot 14** — Tabela de penetração por porte
-> **Screenshot 15** — Boxplot da distribuição por porte
+2. **A penetração varia com o porte do município? Existe faixa populacional
+   sistematicamente mal servida?**
 
----
+Fica claro que quanto maior o porte populacional maior é a taxa de penetração agregada. Com esse viés municípios de até 20 mil habitantes possuem em média 53% de taxa de penetração.
 
-### 3. Estrutura competitiva e monopólios
+O boxplot mostra tanto o nível quanto a dispersão. Faixas com mediana baixa e caixa estreita indicam carência sistemática; faixas com mediana alta e muitos outliers indicam heterogeneidade — alguns municípios bem servidos convivendo com outros mal atendidos no mesmo porte.
 
-*(a completar)*
+A comparação entre penetração agregada e média simples também é informativa: quando a agregada é maior, os municípios grandes da faixa puxam o resultado para cima, o que significa que a média simples descreve melhor o município típico.
+   
+3. **Como se distribui o número de provedores por município? Quantos são monopólio de
+   fato?**
+   
+Não temos nenhum município que tenha somente um provedor de internet, então monopólio claramente declarado não há.
 
-> **Screenshot 16** — Distribuição do número de provedores e relação com HHI
+Frente a isso analisamos cidades com poucos provedores e alto share do líder, isso aparece somente em 7 municípios de pequeno porte, onde o share do líder médio é 86%. Podemos analisar ainda que municípios que possuam até 10 provedores tem um share do líder médio de 69,80%, que também consideramos como um alto índice de ocupação.
+   
+4. **Qual a participação de fibra óptica por município e por região? Quais municípios ainda
+   dependem de rádio, satélite ou cobre?**
+   
+Hoje temos uma alta participação de fibra óptica nos municípios ocupando 81,11% dos atendimentos.
 
----
+Poucos municípios, com menos de 5 mil habitantes possuem ainda pouca ocupação de fibra óptica com níveis de 14,02% até menos de 50%.
 
-### 4. Participação da fibra e dependência de outros meios
+A diferença entre participação agregada e média simples por região indica se a fibra
+está concentrada nos municípios maiores. Agregada muito acima da média significa que
+os grandes centros puxam o número, enquanto o município típico da região tem cobertura
+menor.
 
-*(a completar)*
+Dependência de satélite tende a indicar áreas remotas sem alternativa terrestre;
+dependência de rádio indica cobertura de baixo custo em áreas rurais ou periféricas;
+cabo metálico indica infraestrutura legada de operadora incumbente.
+   
+5. **Quais municípios têm a base de velocidade mais defasada — potencial de upgrade
+   de plano?**
+   
+93,69% já estão classificados como sendo acima de 34Mbps, o que denota de uma alta ocupação com o topo da faixa medida.
 
-> **Screenshot 17** — Participação por meio de acesso no estado
-> **Screenshot 18** — Gráfico de fibra por mesorregião
+6. **A penetração se relaciona com PIB per capita ou com o setor econômico
+   dominante?**
+   
+Percebemos que a distinção entre os setores econômicos é pequena, com uma variação de 2% entre os setores de Indústria, Administração Pública e Serviços. Somente o setor dominante de Agropecuária fica abaixo com 51,07% de penetração, e isso faz sentido pelo atuação de atendimento no campo ser mais restrito ao atendimento com fibra óptica.
 
----
+Um coeficiente de correlação próximo de zero não significa ausência de relação —
+pode indicar relação não linear, ou que outros fatores dominam. O gráfico de dispersão
+em escala logarítmica ajuda a distinguir os dois casos.
 
-### 5. Base de velocidade defasada
+Uma ressalva metodológica importante: o PIB per capita municipal é sensível a
+distorções. Municípios pequenos com uma grande planta industrial ou usina apresentam
+PIB per capita altíssimo sem que a renda das famílias acompanhe. Isso enfraquece a
+variável como proxy de poder aquisitivo domiciliar.
 
-*(a completar)*
+Sobre o setor dominante, a diferença entre média e mediana revela se o resultado é
+puxado por poucos casos extremos.
 
-> **Screenshot 19** — Dispersão defasagem × cobertura de fibra
-
----
-
-### 6. Relação entre penetração, PIB per capita e setor econômico
-
-*(a completar)*
-
-> **Screenshot 20** — Correlações de Pearson
-> **Screenshot 21** — Dispersão PIB × penetração e boxplot por setor
-
----
-
-### 7. Municípios com maior oportunidade comercial
-
-*(a completar)*
-
-> **Screenshot 22** — Ranking do índice de oportunidade
-> **Screenshot 23** — Dispersão oportunidade × concorrência
+7. **Considerando mercado não atendido, defasagem tecnológica e poder aquisitivo,
+   quais municípios apresentam maior oportunidade comercial?**
+   
+Considerando as análises realizadas, podemos observar que as oportunidades estão concentradas em municípios de pequeno porte de até 5 mil habitantes, pois possuem menos de 10 provedores ativos. 
 
 ---
 
 ### Discussão geral
 
-*(a completar após a execução — conectar as sete respostas ao problema original)*
+Observamos que o mercado do Rio Grande do Sul já está saturado, regiões metropolitanas tem um alto índice de provedores para fornecimento de internet, assim como este mesmo range possui uma alta penetração de atendimento.
+Há poucas oportunidades de construção ou atendimento de novas cidades, as oportunidades concentram-se em municípios pequenos de até 5 mil habitantes, mas mesmo assim esses já possuem um alto índice de atuação de empresas, normalmente tendo até 10 provedores com atendimento.
 
 ---
 
@@ -650,10 +682,11 @@ endereço do assinante.
 
 ## Autoavaliação
 
-### Objetivos atingidos
-
-*(a completar — avaliar cada uma das sete perguntas: respondida integralmente,
-parcialmente ou não respondida, e por quê)*
+Os Objetivos propostos pelo trabalho foram alcançados, as 7 perguntas foram trabalhadas 
+e respondidas através da modelagem realizada, com o decorrer do trabalho houveram algumas 
+dificuldades elencadas melhor abaixo, que acabaram enriquecendo o trabalho ao longo de 
+sua constituição. Ainda há a proposição de trabalhos futuros visando melhorar e expandir
+as análises realizadas.
 
 ### Dificuldades encontradas
 
@@ -685,8 +718,6 @@ como denominador de penetração, o que parecia a escolha natural. Só a investi
 dos outliers revelou que a definição do Censo exclui imóveis de uso ocasional — e que
 essa exclusão distorce sistematicamente municípios de veraneio. A correção exigiu
 ingerir uma fonte adicional que não estava no plano original.
-
-*(a completar com outras dificuldades encontradas)*
 
 ### Trabalhos futuros
 
